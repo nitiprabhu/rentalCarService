@@ -1,0 +1,83 @@
+Please follow the below steps for running the project:
+
+Pre steps for installation:
+1. Install cassandra:
+Refer to this link for installing cassandra in mac:
+https://www.datastax.com/2012/01/working-with-apache-cassandra-on-mac-os-x
+
+Purpose: For storing the car details, each transaction details.
+
+2. Install Redis:
+Refer to this link for installing redis in mac:
+https://medium.com/@petehouston/install-and-config-redis-on-mac-os-x-via-homebrew-eb8df9a4f298
+
+Purpose: For storing count of car for each model to handle parallel transaction.
+
+3. Create tables in cassandra:
+a)
+CREATE KEYSPACE bytewheel WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
+
+Usecase: A Keyspace for creating the required tables
+
+
+b)
+CREATE TABLE bytewheel.car_details (
+category text,
+car_id text,
+car_name text,
+cost_per_day int,
+max_car_avail int,
+PRIMARY KEY (category, car_id))
+WITH CLUSTERING ORDER BY (car_id ASC);
+
+Usecase: Static table for storing details of car like types of car, cost of car, number of each type of car etc.
+
+
+c)
+CREATE TABLE bytewheel.user_details (
+upin text PRIMARY KEY,
+email text,
+location text,
+phone_number text
+);
+
+Usecase: Table to store details of customers like email id, phone number etc.
+
+
+d)
+CREATE TABLE bytewheel.user_tracking (
+upin text,
+date date,
+car_id text,
+last_updated timestamp,
+number_of_cars int,
+status text,
+total_cost double,
+PRIMARY KEY (upin, date, car_id, last_updated))
+WITH CLUSTERING ORDER BY (date ASC, car_id ASC, last_updated DESC);
+CREATE INDEX user_tracking_date_idx ON bytewheel.user_tracking (date);
+
+Usecase: Table to store details of each transaction like user name, pickup date, car type, number of cars, cost etc.
+
+4. Insert queries: using dummy data
+a) Insert queries for bytewheel.car_details:
+insert into bytewheel.car_details (category , car_id , car_name , max_car_avail , cost_per_day ) VALUES ( 'COMPACT', 'ford_focus', 'Ford Focus', 2 , 20);
+insert into bytewheel.car_details (category , car_id , car_name , max_car_avail , cost_per_day ) VALUES ( 'COMPACT', 'ford_fiesta', 'Ford Fiesta', 2 , 20);
+insert into bytewheel.car_details (category , car_id , car_name , max_car_avail , cost_per_day ) VALUES ( 'LUXURY', 'bmw_x5', 'BMW X5', 2 , 50);
+insert into bytewheel.car_details (category , car_id , car_name , max_car_avail , cost_per_day ) VALUES ( 'LUXURY', 'bmw_328i', 'BMW 328i', 2 , 50);
+insert into bytewheel.car_details (category , car_id , car_name , max_car_avail , cost_per_day ) VALUES ( 'LARGE', 'ford_escape', 'Ford Escape', 2 , 40);
+insert into bytewheel.car_details (category , car_id , car_name , max_car_avail , cost_per_day ) VALUES ( 'LARGE', 'ford_egde', 'Ford Egde', 2 , 40);
+insert into bytewheel.car_details (category , car_id , car_name , max_car_avail , cost_per_day ) VALUES ( 'FULL', 'volkswagen_jetta', 'Volkswagen Jetta', 2 , 30);
+insert into bytewheel.car_details (category , car_id , car_name , max_car_avail , cost_per_day ) VALUES ( 'FULL', 'chevrolet_malibu', 'Chevrolet Malibu', 2 , 30);
+
+b) Insert queries for bytewheel.user_details:
+insert into bytewheel.user_details (upin , email , location , phone_number ) VALUES ( 'TEST_UPIN', 'nitiprabhu@gmail.com', 'test_location', '1234' );
+
+c) Insert queries for bytewheel.user_tracking:
+insert into bytewheel.user_tracking (upin , date , car_id , last_updated , number_of_cars , status , total_cost ) VALUES ( 'TEST_UPIN', '2016-01-01', 'ford_fiesta', 1, 'Booked', '50');
+
+
+6) Copy the below mentioned jar and run it using java with run parameters as :
+
+
+java -Dcassandra.address= -Dcassandra.port= -Dspring.mail.username= -Dspring.mail.password= -jar jar_file.java
