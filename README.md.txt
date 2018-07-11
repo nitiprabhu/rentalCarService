@@ -82,6 +82,8 @@ insert into bytewheel.user_tracking (upin , date , car_id , last_updated , numbe
 
 java -Dcassandra.address= -Dcassandra.port= -Dspring.mail.username= -Dspring.mail.password= -jar jar_file.java
 
+jar_file.java Link - https://github.com/nitiprabhu/rentalCarService/blob/master/carrent-0.0.1-SNAPSHOT.jar
+
 
 API Instructions: 
 
