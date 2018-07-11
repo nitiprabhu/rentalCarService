@@ -1,0 +1,258 @@
+#Please import CarRent.postman_collection file to test through postman
+
+1. When a user picks the date for car rent, client will send a request to backend as follows.
+
+Controller URL - /pickupdate
+Method - POST
+Headers -Content-Type:application/json
+Body - {"upin":"upin", "requestDate":"requestDate"}
+
+Response - {
+    "categories": [],
+    "requestedDate": "requestedDate",
+    "upin": "upin"
+}
+
+definition:
+
+upin - unique id given to the user;
+requestDate - date picked by the user for the car rent
+categories - List of categories available for car rent
+
+Example:
+
+RequestBody - {"upin":"TEST_UPIN", "requestDate":"2019-01-01"}
+ResponseBody - {"categories":["LUXURY","LARGE","FULL","COMPACT"],"requestedDate":"2019-01-01","upin":"TEST_UPIN"}
+
+
+2. When a user opted categories, client will send a request as follows.
+
+Controller URL - /optedCategories
+Method - POST
+Headers -Content-Type:application/json
+Body - {"requestDate":"requestDate","upin":"upin","categoriesOpted":["category_list"]}
+
+Response - {
+    "requestDate": "requestDate",
+    "carDetails": [{
+            "category": "category",
+            "carId": "carId",
+            "carName": "carName",
+            "maxCarAvail": maxCarAvail,
+            "costPerDay": costPerDay
+        }],
+    "upin": "upin"
+}
+
+definition:
+
+category - Category of the Car
+carId - CarId of the Car
+carName - Name of the car
+maxCarAvail - Maximum available Car
+costPerDay - Cost of the Car per day
+
+
+Example:
+
+RequestBody - {"requestDate":"2019-02-07","upin":"TEST_UPIN","categoriesOpted":["LUXURY","COMPACT"]}
+Response - {
+    "requestDate": "2019-02-07",
+    "carDetails": [
+        {
+            "category": "LUXURY",
+            "carId": "bmw_328i",
+            "carName": "BMW 328i",
+            "maxCarAvail": 2,
+            "costPerDay": 50
+        },
+        {
+            "category": "LUXURY",
+            "carId": "bmw_x5",
+            "carName": "BMW X5",
+            "maxCarAvail": 2,
+            "costPerDay": 50
+        },
+        {
+            "category": "COMPACT",
+            "carId": "ford_fiesta",
+            "carName": "Ford Fiesta",
+            "maxCarAvail": 0,
+            "costPerDay": 20
+        },
+        {
+            "category": "COMPACT",
+            "carId": "ford_focus",
+            "carName": "Ford Focus",
+            "maxCarAvail": 2,
+            "costPerDay": 20
+        }
+    ],
+    "upin": "TEST_UPIN"
+}
+
+3. When a user book the car, client will send a request as follows.
+
+Controller URL - /bookcar
+Headers - Content-Type - application/json
+Method - POST
+Body - {
+    "requestDate": "requestDate",
+    "upin":"upin",
+    "carBookedDetails": [
+        {
+            "category": "category",
+            "carId": "carId",
+            "numberOfCarBooked": numberOfCarBooked,
+            "costPerDay": "costPerDay"
+        }
+    ]
+}
+
+Response - {
+    "upin": "upin",
+    "requestDate": "requestDate",
+    "carBookedDetails": [
+        {
+            "category": "category",
+            "carId": "carId",
+            "numberOfCarBooked": numberOfCarBooked,
+            "bookedSuccessful": isBookedSuccessful,
+            "costPerDay": costPerDay
+        }
+    ]
+}
+
+Definition:
+
+category - Category of the Car
+carId - CarId of the Car
+carName - Name of the car
+bookedSuccessful - True if booked successully, false if not
+costPerDay - Cost of the Car per day
+
+Example:
+
+RequestBody - {
+    "requestDate": "2019-02-10",
+    "upin":"TEST_UPIN",
+    "carBookedDetails": [
+        {
+            "category": "COMPACT",
+            "carId": "ford_fiesta",
+            "numberOfCarBooked": 1,
+            "costPerDay": "20"
+        }
+    ]
+}
+
+ResponseBody - {
+    "upin": "TEST_UPIN",
+    "requestDate": "2019-02-10",
+    "carBookedDetails": [
+        {
+            "category": "COMPACT",
+            "carId": "ford_fiesta",
+            "numberOfCarBooked": 1,
+            "bookedSuccessful": true,
+            "costPerDay": 20
+        }
+    ]
+}
+
+4. When an admin picks date for collecting report, client will send a following request as follows.
+
+Controller URL - /collectreport
+Headers - Content-Type: multipart/form-data
+Method - POST
+Parameters - "name": "requestDate", "value": "requested_date"
+
+Response - [
+    {
+        "upin": "upin",
+        "date": {
+            "year": year,
+            "month": month,
+            "chronology": {
+                "id": "id",
+                "calendarType": "calendarType"
+            },
+            "monthValue": monthValue,
+            "dayOfMonth": dayOfMonth,
+            "dayOfWeek": "dayOfWeek",
+            "era": era,
+            "dayOfYear": dayOfYear,
+            "leapYear": leapYear
+        },
+        "carId": "carId",
+        "lastUpdated": {
+            "nano": nan,
+            "epochSecond": ephoc_seconds
+        },
+        "numberOfCars": number of cars,
+        "status": status,
+        "totalCost": total cost
+    }
+]
+
+definition:
+
+numberOfCars - Number of car booked by the user on the date
+totalCost - Total cost for car booked
+
+Example:
+
+Request - Content-Disposition: form-data; name="requestDate", value = 2019-02-09
+
+Response - [
+    {
+        "upin": "TEST_UPIN",
+        "date": {
+            "year": 2019,
+            "month": "FEBRUARY",
+            "chronology": {
+                "id": "ISO",
+                "calendarType": "iso8601"
+            },
+            "monthValue": 2,
+            "dayOfMonth": 9,
+            "dayOfWeek": "SATURDAY",
+            "era": "CE",
+            "dayOfYear": 40,
+            "leapYear": false
+        },
+        "carId": "ford_fiesta",
+        "lastUpdated": {
+            "nano": 474000000,
+            "epochSecond": 1531319302
+        },
+        "numberOfCars": 1,
+        "status": "SUCCESS",
+        "totalCost": 20
+    },
+    {
+        "upin": "TEST_UPIN",
+        "date": {
+            "year": 2019,
+            "month": "FEBRUARY",
+            "chronology": {
+                "id": "ISO",
+                "calendarType": "iso8601"
+            },
+            "monthValue": 2,
+            "dayOfMonth": 9,
+            "dayOfWeek": "SATURDAY",
+            "era": "CE",
+            "dayOfYear": 40,
+            "leapYear": false
+        },
+        "carId": "ford_fiesta",
+        "lastUpdated": {
+            "nano": 378000000,
+            "epochSecond": 1531319273
+        },
+        "numberOfCars": 1,
+        "status": "SUCCESS",
+        "totalCost": 20
+    }
+]

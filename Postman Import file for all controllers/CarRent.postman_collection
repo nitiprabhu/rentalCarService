@@ -1,0 +1,140 @@
+{
+	"id": "d8913e61-0fae-e261-fdbb-dee4938caf99",
+	"name": "CarRent",
+	"description": "",
+	"order": [
+		"d63d9fa8-998b-f979-2840-dd5bb8402bfc",
+		"64df7944-76aa-16d4-732a-845121aa3629",
+		"835fd11e-3452-6162-e1c3-7406e4737550",
+		"8788f078-1d5d-f49d-dd90-b7a902d38573"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1531329279363,
+	"owner": 0,
+	"public": false,
+	"requests": [
+		{
+			"id": "64df7944-76aa-16d4-732a-845121aa3629",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/optedCategories",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "d8913e61-0fae-e261-fdbb-dee4938caf99",
+			"data": [],
+			"dataMode": "raw",
+			"name": "localhost:8080/optedCategories",
+			"description": "When user opted categories",
+			"descriptionFormat": "html",
+			"time": 1531329313088,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\"requestDate\":\"2019-02-02\",\"upin\":\"TEST_UPIN\",\"categoriesOpted\":[\"LUXURY\",\"COMPACT\"]}"
+		},
+		{
+			"id": "835fd11e-3452-6162-e1c3-7406e4737550",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/bookcar",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "d8913e61-0fae-e261-fdbb-dee4938caf99",
+			"data": [],
+			"dataMode": "raw",
+			"name": "localhost:8080/bookcar",
+			"description": "When user books the car",
+			"descriptionFormat": "html",
+			"time": 1531329328015,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n    \"requestDate\": \"2019-02-10\",\n    \"upin\":\"TEST_UPIN\",\n    \"carBookedDetails\": [\n        {\n            \"category\": \"COMPACT\",\n            \"carId\": \"ford_fiesta\",\n            \"numberOfCarBooked\": 1,\n            \"costPerDay\": \"20\"\n        }\n    ]\n}"
+		},
+		{
+			"id": "8788f078-1d5d-f49d-dd90-b7a902d38573",
+			"headers": "",
+			"headerData": [],
+			"url": "localhost:8080/collectreport",
+			"queryParams": [],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [
+				{
+					"key": "requestDate",
+					"value": "2019-02-09",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1531329346536,
+			"name": "localhost:8080/collectreport",
+			"description": "When admin wants report as of day",
+			"collectionId": "d8913e61-0fae-e261-fdbb-dee4938caf99",
+			"responses": []
+		},
+		{
+			"id": "d63d9fa8-998b-f979-2840-dd5bb8402bfc",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8080/pickupdate",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "d8913e61-0fae-e261-fdbb-dee4938caf99",
+			"data": [],
+			"dataMode": "raw",
+			"name": "localhost:8080/pickupdate",
+			"description": "This is when user picks up a date for car rent",
+			"descriptionFormat": "html",
+			"time": 1531329280725,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\"upin\":\"TEST_UPIN\", \"requestDate\":\"2019-02-01\"}"
+		}
+	]
+}
