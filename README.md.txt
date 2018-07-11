@@ -84,6 +84,8 @@ java -Dcassandra.address= -Dcassandra.port= -Dspring.mail.username= -Dspring.mai
 
 jar_file.java Link - https://github.com/nitiprabhu/rentalCarService/blob/master/carrent-0.0.1-SNAPSHOT.jar
 
+# ByDefault cassandra.port=9042, cassandra.address=localhost, spring.mail.username={Sender EmailId}, spring.mail.password={sender emailId's password}
+
 
 API Instructions: 
 
